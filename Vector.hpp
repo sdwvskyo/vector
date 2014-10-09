@@ -338,7 +338,7 @@ typename Vector<T, Alloc>::iterator Vector<T, Alloc>::insert(iterator position, 
 {
     difference_type pos = position - data_; //防止失效
     insert(position, 1, val);
-    return position + pos;
+    return data_ + pos;
 }
 
 template <typename T, typename Alloc>
@@ -353,8 +353,7 @@ void Vector<T, Alloc>::insert(iterator position, size_type n, const value_type& 
     if(n < left) 
     {
         //元素后移n位
-        size_type len = avail_ - position; //需要移动的数量
-        size_type len_copy = len - n; //需要复制的数量
+        size_type len_copy = left - n; //需要复制的数量
         std::uninitialized_copy(position + len_copy, avail_, avail_);
         std::copy_backward(position, position + len_copy, avail_);
         //fill
@@ -395,8 +394,7 @@ void Vector<T, Alloc>::insert(iterator position, InputIterator first, InputItera
     if(n < left) 
     {
         //元素后移n位
-        size_type len = avail_ - position; //需要移动的数量
-        size_type len_copy = len - n; //需要复制的数量
+        size_type len_copy = left - n; //需要复制的数量
         std::uninitialized_copy(position + len_copy, avail_, avail_);
         std::copy_backward(position, position + len_copy, avail_);
         //copy
